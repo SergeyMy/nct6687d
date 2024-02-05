@@ -909,9 +909,9 @@ static ssize_t show_pwm_mode(struct device *dev, struct device_attribute *attr, 
         struct nct6687_data *data = nct6687_update_device(dev);
         struct sensor_device_attribute_2 *sattr = to_sensor_dev_attr_2(attr);
         int index = sattr->index;
-mode = nct6687_read(data, NCT6687_REG_PWM_MODE);
-pwm_mode = (u8)( (mode >> index)&0x01);
-return sprintf(buf, "%d\n", pwm_mode);
+	mode = nct6687_read(data, NCT6687_REG_PWM_MODE);
+	pwm_mode = (u8)( (mode >> index)&0x01);
+	return sprintf(buf, "%d\n", pwm_mode);
 }       
 SENSOR_TEMPLATE(pwm_mode, "pwm%d_mode", S_IRUGO, show_pwm_mode, NULL, 0);
 
