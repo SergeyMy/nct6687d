@@ -2,9 +2,9 @@ obj-m += nct6687.o
 
 curpwd      := $(shell pwd)
 kver        ?= $(shell uname -r)
-commitcount := $(shell git rev-list --all --count)
-commithash  := $(shell git rev-parse --short HEAD)
-fedoraver := $(shell sed -n 's/.*Fedora release \([^ ]*\).*/\1/p' /etc/fedora-release)
+commitcount := $(shell git rev-list --all --count 2>/dev/null)
+commithash  := $(shell git rev-parse --short HEAD 2>/dev/null)
+fedoraver   := $(shell sed -n 's/.*Fedora release \([^ ]*\).*/\1/p' /etc/fedora-release 2>/dev/null || echo 0)
 
 
 build:
@@ -71,7 +71,7 @@ debian/changelog: FORCE
 		> $@
 
 deb: debian/changelog
-	sudo apt install -y debhelper dkms dh-dkms
+	sudo apt install -y debhelper dkms
 	@if apt-cache show dh-dkms > /dev/null 2>&1; then \
 		sudo apt-get install -y dh-dkms; \
 	fi
